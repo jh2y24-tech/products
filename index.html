@@ -247,4 +247,19 @@ function openGuide(url,name){document.getElementById("viewerTitle").textContent=
 window.openGuideIdx=function(i){var g=GUIDES[i];if(!g.url){alert("가이드 링크 준비중입니다.");return;}openGuide(g.url,g.brand+" 가이드");};
 function closeCatalog(){viewer.classList.remove("open");viewerFrame.src="";}
 document.getElementById("viewerClose").onclick=closeCatalog;
-document.addEventListener("keydown",function(e){if(e.key!=="Esca
+document.addEventListener("keydown",function(e){if(e.key!=="Escape")return;if(viewer.classList.contains("open"))closeCatalog();else closeDetail();});
+
+var box=document.getElementById("searchBox");
+input.addEventListener("input",function(e){query=e.target.value;box.classList.toggle("has-value",query.length>0);render();});
+document.getElementById("clear").onclick=function(){query="";input.value="";box.classList.remove("has-value");input.focus();render();};
+var toTop=document.getElementById("toTop"),toTopDetail=document.getElementById("toTopDetail"),detailScroll=document.getElementById("detail");
+window.addEventListener("scroll",function(){if(!overlay.classList.contains("open"))toTop.classList.toggle("show",window.scrollY>300);});
+toTop.onclick=function(){window.scrollTo({top:0,behavior:"smooth"});};
+detailScroll.addEventListener("scroll",function(){toTopDetail.classList.toggle("show",detailScroll.scrollTop>300);});
+toTopDetail.onclick=function(){detailScroll.scrollTo({top:0,behavior:"smooth"});};
+var homeBtn=document.getElementById("homeBtn");
+homeBtn.onclick=function(){query="";input.value="";box.classList.remove("has-value");activeCat="";syncChips();render();window.scrollTo({top:0,behavior:"smooth"});};
+render();
+</script>
+</body>
+</html>
